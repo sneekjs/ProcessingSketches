@@ -16,7 +16,10 @@ float paddlePos;
 float paddleWidth = 150;
 
 // The paddle
-Boundary paddle;
+Paddle paddle;
+
+// The ball
+Ball ball;
 
 void setup() {
   fullScreen();
@@ -39,7 +42,10 @@ void setup() {
   boundaries.add(new Boundary(width, 10, 10, height*2));      //right
   
   // Spawn Paddle
-  paddle = new Boundary(0, height/1.1f, paddleWidth, 10);
+  paddle = new Paddle(0, height/1.1f, paddleWidth, 10);
+  
+  // Spawn Ball
+  ball = new Ball(width/2, 800, 50);
 }
 
 void draw() {
@@ -74,7 +80,10 @@ void draw() {
   }
   
   // Display paddle
-  paddle.x = mouseX;
-  paddle.adjustCollision();
   paddle.display();
+  paddle.killBody();
+  paddle = new Paddle(mouseX, height/1.1f, paddleWidth, 10);
+  
+  // Display ball
+  ball.display();
 }
