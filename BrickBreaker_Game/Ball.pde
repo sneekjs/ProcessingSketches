@@ -1,3 +1,4 @@
+float ballSpeed = 35;
 class Ball {
 
   // We need to keep track of a Body and a width and height
@@ -52,12 +53,13 @@ class Ball {
   void makeBody(PVector center, float r) {
       // Define and create the body
       BodyDef bd = new BodyDef();
-      bd.type = BodyType.KINEMATIC;
+      bd.type = BodyType.DYNAMIC;
       bd.position.set(box2d.coordPixelsToWorld(center));
+      bd.gravityScale = 0.0f;
       body = box2d.createBody(bd);
   
       // Give it some initial random velocity
-      body.setLinearVelocity(new Vec2(15, 15));
+      body.setLinearVelocity(new Vec2(ballSpeed, ballSpeed));
   
       // Make the body's shape a circle
       CircleShape cs = new CircleShape();
@@ -73,5 +75,20 @@ class Ball {
       // Attach fixture to body
       body.createFixture(fd);
   
+    }
+    
+    void setVelocity(){
+      float x = ballSpeed;
+      float y = ballSpeed;
+      if(body.getLinearVelocity().x < 0)
+      {
+        x = -ballSpeed;
+      }
+      if(body.getLinearVelocity().y < 0)
+      {
+        y = -ballSpeed;
+      }
+      
+      body.setLinearVelocity(new Vec2(x, y));
     }
 }

@@ -2,6 +2,10 @@ import shiffman.box2d.*;
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
+import org.jbox2d.dynamics.joints.*;
+import org.jbox2d.collision.shapes.*;
+import org.jbox2d.collision.shapes.Shape;
+import org.jbox2d.dynamics.contacts.*;
 
 // A reference to our box2d world
 Box2DProcessing box2d;
@@ -28,6 +32,7 @@ void setup() {
   // Initialize box2d physics and create the world
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
+  box2d.listenForCollisions();
   // We are setting a custom gravity
   box2d.setGravity(0, -10);
 
@@ -45,7 +50,7 @@ void setup() {
   paddle = new Paddle(0, height/1.1f, paddleWidth, 10);
   
   // Spawn Ball
-  ball = new Ball(width/2, 800, 50);
+  ball = new Ball(width/2, 800, 25);
 }
 
 void draw() {
@@ -53,12 +58,6 @@ void draw() {
 
   // We must always step through time!
   box2d.step();
-
-  // Boxes fall from the top every so often
-  if (random(1) < 0.2) {
-    Box p = new Box(width/2,30);
-    boxes.add(p);
-  }
 
   // Display all the boundaries
   for (Boundary wall: boundaries) {
@@ -69,15 +68,6 @@ void draw() {
   for (Box b: boxes) {
     b.display();
   }
-
-  // Boxes that leave the screen, we delete them
-  // (note they have to be deleted from both the box2d world and our list
-  for (int i = boxes.size()-1; i >= 0; i--) {
-    Box b = boxes.get(i);
-    if (b.done()) {
-      boxes.remove(i);
-    }
-  }
   
   // Display paddle
   paddle.display();
@@ -86,4 +76,5 @@ void draw() {
   
   // Display ball
   ball.display();
+  ball.setVelocity();
 }
