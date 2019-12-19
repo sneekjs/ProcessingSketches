@@ -13,7 +13,7 @@ Box2DProcessing box2d;
 // A list we'll use to track fixed objects
 ArrayList<Boundary> boundaries;
 // A list for all of our rectangles
-ArrayList<Box> boxes;
+ArrayList<Breakable> breakables;
 
 // Paddle values
 float paddlePos;
@@ -25,6 +25,14 @@ Paddle paddle;
 // The ball
 Ball ball;
 
+//Breakable values
+float breakableSize = 100;
+int xStartPos = width/1;
+int yStartPos = height/1;
+int blockGap = 150;
+int amountOfRows = 12;
+int amountPerRow = 5;
+
 void setup() {
   fullScreen();
   smooth();
@@ -33,11 +41,9 @@ void setup() {
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
   box2d.listenForCollisions();
-  // We are setting a custom gravity
-  box2d.setGravity(0, -10);
 
   // Create ArrayLists  
-  boxes = new ArrayList<Box>();
+  breakables = new ArrayList<Breakable>();
   boundaries = new ArrayList<Boundary>();
 
   // Add a bunch of fixed boundaries
@@ -51,10 +57,13 @@ void setup() {
   
   // Spawn Ball
   ball = new Ball(width/2, 800, 25);
+  
+  //Spawn breakables
+  spawnBreakables();
 }
 
 void draw() {
-  background(255);
+  //background(255);
 
   // We must always step through time!
   box2d.step();
@@ -65,7 +74,7 @@ void draw() {
   }
 
   // Display all the boxes
-  for (Box b: boxes) {
+  for (Breakable b: breakables) {
     b.display();
   }
   
@@ -78,3 +87,15 @@ void draw() {
   ball.display();
   ball.setVelocity();
 }
+
+void spawnBreakables()
+{
+  for(int x = xStartPos; x < xStartPos + amountOfRows * blockGap; x += blockGap)
+  {
+    for(int y = yStartPos; y < yStartPos + amountPerRow * blockGap; y += blockGap)
+    {
+        breakables.add(new Breakable(x, y, breakableSize, breakableSize/2)); 
+    }
+  }
+}
+//use documentation http://box2d.org/manual.pdf
