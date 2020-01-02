@@ -70,8 +70,9 @@ class Breakable {
     
     // Define the body and make it from the shape
     BodyDef bd = new BodyDef();
-    bd.type = BodyType.KINEMATIC;
+    bd.type = BodyType.DYNAMIC;
     bd.position.set(box2d.coordPixelsToWorld(new Vec2(x, y)));
+    bd.gravityScale = 0.0f;
 
     body = box2d.createBody(bd);
     body.createFixture(fd);
