@@ -1,4 +1,4 @@
-float ballSpeed = 50;
+float ballSpeed = 25;
 class Ball {
 
   // We need to keep track of a Body and a width and height
@@ -6,13 +6,14 @@ class Ball {
   float w;
   float h;
   float rad;
-  
+    
   // Constructor
   Ball(float x, float y, float r) {
     w = x;
     h = y;
     rad = r*2;
     makeBody(new PVector(x, y), r);
+    body.setUserData(this);
   }
 
   // This function removes the particle from the box2d world
@@ -21,11 +22,9 @@ class Ball {
   }
 
   // Is the particle ready for deletion?
-  boolean done() {
-    // Let's find the screen position of the particle
+   boolean done() {
     Vec2 pos = box2d.getBodyPixelCoord(body);
-    // Is it off the bottom of the screen?
-    if (pos.y > height+w*h) {
+    if (pos.y > height/1.1f) {
       killBody();
       return true;
     }

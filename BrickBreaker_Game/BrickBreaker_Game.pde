@@ -1,10 +1,7 @@
 import shiffman.box2d.*;
-import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
-import org.jbox2d.dynamics.joints.*;
 import org.jbox2d.collision.shapes.*;
-import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.dynamics.contacts.*;
 
 // A reference to our box2d world
@@ -41,7 +38,6 @@ void setup() {
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
   box2d.listenForCollisions();
-
   // Create ArrayLists  
   breakables = new ArrayList<Breakable>();
   boundaries = new ArrayList<Boundary>();
@@ -63,7 +59,7 @@ void setup() {
 }
 
 void draw() {
-  //background(255);
+  background(255);
 
   // We must always step through time!
   box2d.step();
@@ -74,8 +70,14 @@ void draw() {
   }
 
   // Display all the boxes
-  for (Breakable b: breakables) {
+  for (int i = breakables.size()-1; i >= 0; i--) {
+    Breakable b = breakables.get(i);
     b.display();
+    
+    if(b.done())
+    {
+      breakables.remove(i);
+    }
   }
   
   // Display paddle
@@ -83,9 +85,18 @@ void draw() {
   paddle.killBody();
   paddle = new Paddle(mouseX, height/1.1f, paddleWidth, 10);
   
+  if(ball == null)
+  {
+    return;
+  }
   // Display ball
   ball.display();
   ball.setVelocity();
+  
+  if(ball.done())
+  {
+    ball = null;
+  }
 }
 
 void spawnBreakables()
@@ -99,6 +110,7 @@ void spawnBreakables()
   }
 }
 
+// Collision event functions!
 void beginContact(Contact cp) {
   // Get both fixtures
   Fixture f1 = cp.getFixtureA();
@@ -110,17 +122,25 @@ void beginContact(Contact cp) {
   Object o1 = b1.getUserData();
   Object o2 = b2.getUserData();
 
-  // If object 1 is a Box, then object 2 must be a particle
+  if (o1==null || o2==null)
+     return;
+
+  // If object 1 is a Ball, then object 2 must be a breakable
   // Note we are ignoring particle on particle collisions
   if (o1.getClass() == Ball.class) {
-    Breakable p = (Breakable) o2;
-    p.change();
+    Breakable b = (Breakable) o2;
+    b.change();
   } 
-  // If object 2 is a Box, then object 1 must be a particle
+  // If object 2 is a Ball, then object 1 must be a Breakable
   else if (o2.getClass() == Ball.class) {
-    Breakable p = (Breakable) o1;
-    p.change();
+    Breakable b = (Breakable) o1;
+    b.change();
   }
+}
+
+
+// Objects stop touching each other
+void endContact(Contact cp) {
 }
 
 //use documentation http://box2d.org/manual.pdf

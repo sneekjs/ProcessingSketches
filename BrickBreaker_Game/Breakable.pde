@@ -13,6 +13,8 @@ class Breakable {
   float hght;
 
   color col;
+  
+  boolean shouldDie = false;
 
 
   Breakable(float x, float y, float w, float h) {
@@ -31,7 +33,7 @@ class Breakable {
 
   // Change color when hit
   void change() {
-    col = color(255, 0, 0);
+    shouldDie = true;
   }
 
   // 
@@ -50,6 +52,19 @@ class Breakable {
     strokeWeight(1);
     rect(0, 0, wdth, hght);
     popMatrix();
+    
+    if(!box2d.world.isLocked() && shouldDie)
+    {
+      box2d.destroyBody(body);
+    }
+  }
+  
+    boolean done() {
+    if (shouldDie) {
+      killBody();
+      return true;
+    }
+    return false;
   }
 
   // Here's our function that adds the particle to the Box2D world
