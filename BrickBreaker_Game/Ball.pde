@@ -69,7 +69,7 @@ class Ball {
     
       fd.density = 1;
       fd.friction = 0;  // Slippery when wet!
-      fd.restitution = 0.5;
+      fd.restitution = 1;
   
       // Attach fixture to body
       body.createFixture(fd);
