@@ -38,8 +38,8 @@ class Boundary {
   void display() {
      Vec2 pos = box2d.getBodyPixelCoord(b);
 
-    fill(255, 0, 0);
-    stroke(0);
+    fill(255, 0);
+    noStroke();
     rectMode(CENTER);
     rect(x,y,w,h);
   }

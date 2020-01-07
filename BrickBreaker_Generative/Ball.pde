@@ -1,4 +1,6 @@
 float ballSpeed = 50;
+float col = 0;
+boolean colSwitch = false;
 class Ball {
 
   // We need to keep track of a Body and a width and height
@@ -38,15 +40,16 @@ class Ball {
     Vec2 pos = box2d.getBodyPixelCoord(body);
     // Get its angle of rotation
     float a = body.getAngle();
-
+       
     rectMode(CENTER);
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(-a);
-    fill(175);
-    stroke(0);
+    stroke(col, 255, 255, 100);
+    fill(col, 255, 255, 100);
     circle(0, 0, rad);
     popMatrix();
+    morphColor();
   }
 
   // This function adds the ball to the box2d world
@@ -68,9 +71,9 @@ class Ball {
       FixtureDef fd = new FixtureDef();
       fd.shape = cs;
     
-      fd.density = 1;
+      fd.density = 1.5f;
       fd.friction = 0;  // Slippery when wet!
-      fd.restitution = 0.5;
+      fd.restitution = 0.5f;
   
       // Attach fixture to body
       body.createFixture(fd);
@@ -90,5 +93,18 @@ class Ball {
       }
       
       body.setLinearVelocity(new Vec2(x, y));
+    }
+}
+
+void morphColor(){
+  if(colSwitch){
+      col -= 1;
+    } else {
+      col += 1;
+    }
+    if(col > 100){
+      colSwitch = !colSwitch;
+    }else if (col < 0){
+      colSwitch = !colSwitch;
     }
 }

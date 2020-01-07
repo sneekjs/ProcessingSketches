@@ -21,7 +21,7 @@ class Breakable {
     // This function puts the particle in the Box2d world
     makeBody(x, y, w, h);
     body.setUserData(this);
-    col = color(175, 0, 255);
+    col = color(80, 100, 100);
   }
 
   // This function removes the particle from the box2d world
@@ -45,8 +45,9 @@ class Breakable {
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(a);
-    fill(col);
-    stroke(255);
+    fill(col, 100);
+    //noFill();
+    stroke(255, 0, 100);
     strokeWeight(1);
     rect(0, 0, wdth, hght);
     popMatrix();
@@ -66,7 +67,7 @@ class Breakable {
     // Parameters that affect physics
     fd.density = 1;
     fd.friction = 0.3;
-    fd.restitution = 0.5;
+    fd.restitution = 0.9f;
     
     // Define the body and make it from the shape
     BodyDef bd = new BodyDef();

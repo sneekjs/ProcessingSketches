@@ -36,6 +36,9 @@ int amountPerRow = 5;
 void setup() {
   fullScreen();
   smooth();
+  background(0);
+
+  colorMode(HSB, 100);
 
   // Initialize box2d physics and create the world
   box2d = new Box2DProcessing(this);
@@ -47,10 +50,10 @@ void setup() {
   boundaries = new ArrayList<Boundary>();
 
   // Add a bunch of fixed boundaries
-  boundaries.add(new Boundary(0, height, width*2, 10));       //bottom
-  boundaries.add(new Boundary(0, 0, width*2, 10));            //top
-  boundaries.add(new Boundary(0, 10, 10, height*2));          //left
-  boundaries.add(new Boundary(width, 10, 10, height*2));      //right
+  boundaries.add(new Boundary(0, height, width*2, 5));       //bottom
+  boundaries.add(new Boundary(0, 0, width*2, 5));            //top
+  boundaries.add(new Boundary(0, 5, 5, height*2));          //left
+  boundaries.add(new Boundary(width, 5, 5, height*2));      //right
   
   // Spawn Paddle
   //paddle = new Paddle(0, height/1.1f, paddleWidth, 10);
@@ -64,7 +67,9 @@ void setup() {
 
 void draw() {
   //background(255);
-
+  noStroke();
+  fill(0, 1);
+  //rect(0,0,width*2, height*2);
   // We must always step through time!
   box2d.step();
 
