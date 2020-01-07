@@ -62,8 +62,13 @@ void draw() {
   background(255);
 
   // We must always step through time!
-  box2d.step();
-
+  try
+  {
+    box2d.step();
+  }
+  catch (Exception e){
+  }
+  
   // Display all the boundaries
   for (Boundary wall: boundaries) {
     wall.display();

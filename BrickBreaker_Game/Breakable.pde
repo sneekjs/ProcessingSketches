@@ -62,6 +62,7 @@ class Breakable {
     boolean done() {
     if (shouldDie) {
       killBody();
+      print("width is " + wdth + " and height is " + hght + "\n");
       return true;
     }
     return false;
@@ -79,7 +80,7 @@ class Breakable {
     FixtureDef fd = new FixtureDef();
     fd.shape = sd;
     // Parameters that affect physics
-    fd.density = 1;
+    fd.density = 1000f;
     fd.friction = 0;
     fd.restitution = 1;
     

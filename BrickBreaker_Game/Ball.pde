@@ -67,10 +67,10 @@ class Ball {
       FixtureDef fd = new FixtureDef();
       fd.shape = cs;
     
-      fd.density = 1;
+      fd.density = 0.1f;
       fd.friction = 0;  // Slippery when wet!
       fd.restitution = 1;
-  
+
       // Attach fixture to body
       body.createFixture(fd);
   
