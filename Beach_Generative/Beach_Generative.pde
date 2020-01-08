@@ -31,7 +31,7 @@ void setup() {
 void draw() {
   //background(255, 219, 77);
   noStroke();
-  fill(255, 219, 77, 10);
+  fill(255, 219, 77, 7);
   rect(0, 0, width, height);
   drawSea();
   drawSunShade();
