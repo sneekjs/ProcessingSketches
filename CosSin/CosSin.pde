@@ -44,3 +44,11 @@ void step(){
   y = y2;
   i+=1;
 }
+
+void keyPressed(){
+  switch (key)
+  {
+    case 'p': saveFrame("image_####.jpg");
+    break;
+  }
+}
