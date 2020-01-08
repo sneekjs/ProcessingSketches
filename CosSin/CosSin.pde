@@ -27,9 +27,9 @@ void draw()
 }
 
 void orb(){
-  stroke((frameCount/2)%255, 123, (frameCount)%255, 1);
-  float v = cos(frameCount/94.242) * 500.0;
-  float w = sin(frameCount/145.213) * 500.0;
+  stroke((frameCount/2)%255, 255, 255, 1);
+  float v = cos(frameCount/94.242) * 600.0;
+  float w = sin(frameCount/145.213) * 600.0;
   line(v, w, w, v);
 }
 
