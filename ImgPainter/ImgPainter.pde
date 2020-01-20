@@ -1,10 +1,10 @@
-String[] imgNames = {"VanGogh.jpg", "PrettyLex.jpg", "Cos.jpg", "Spider.png", "Eyes.png", "Happy.png", "Lex.jpg", "Magik.png", "Sad.png"};
+String[] imgNames = {"VanGogh.jpg", "King.jpg", "Cos.jpg", "Cat.jpg", "Happy.png", "Obama.jpg", "PrettyLex.jpg"};
 PImage img;
 int imgIndex = 0;
-
+int brushType = 0;
 
 void nextImage() {
-  background(255);
+  //background(255);
   loop();
   frameCount = 0;
   
@@ -79,34 +79,48 @@ void draw() {
         rotate(radians(random(-90, 90)));
         
         // paint based on framecount
-        if (frameCount < 60) {
+        if (brushType == 0) {
           // huge
           paintStroke(random(150, 250), pixelColor, (int)random(20, 40));
-        } else if (frameCount < 200) {
+        } else if (brushType == 1) {
           // big
           paintStroke(random(75, 125), pixelColor, (int)random(8, 12));
-        } else if (frameCount < 350) {
+        } else if (brushType == 2) {
           // small
           paintStroke(random(30, 60), pixelColor, (int)random(1, 4));
-        } else if (frameCount < 500) {
+        } else if (brushType == 3) {
           // dots
           paintStroke(random(5, 20), pixelColor, (int)random(1, 3));
-        } else if (frameCount < 750) {
+          paintStroke(random(5, 20), pixelColor, (int)random(1, 3));
+        } else if (brushType == 4) {
           // dots
           paintStroke(random(4, 15), pixelColor, (int)random(1, 1));
+          paintStroke(random(4, 15), pixelColor, (int)random(1, 1));          
+          paintStroke(random(4, 15), pixelColor, (int)random(1, 1));
+
         }
         popMatrix();
       }
       index += 1;
     }
   }
-  
-  if (frameCount > 600) {
-    //noLoop();
-  }
 }
 
 
 void mousePressed() {
   nextImage();
+}
+
+void keyPressed()
+{
+  if(key == 'a') {
+    brushType--;
+  }else if (key == 'd') {
+    brushType++;
+  }
+  if(brushType > 4){
+    brushType = 4;
+  }else if (brushType < 0) {
+    brushType = 0;
+  }
 }
