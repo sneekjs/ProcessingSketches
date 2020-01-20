@@ -15,8 +15,9 @@ void draw()
 {
   //background(255);
   translate(width/2, height/2);
+  if(frameCount < 2212){
   orb();
-  
+  }
   for(int j=0; j<1000; j++)
   {
     //rotate(1.24563);
@@ -27,8 +28,8 @@ void draw()
 
 void orb(){
   stroke(100, 255, 255, 8);
-  float v = cos(frameCount/200.0) * 500.0;
-  float w = sin(frameCount/200.0) * 500.0;
+  float v = cos(150 + frameCount/200.0) * 500.0;
+  float w = sin(150 + frameCount/200.0) * 500.0;
   line(v, w, w, v);
 }
 
